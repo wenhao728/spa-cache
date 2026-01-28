@@ -36,4 +36,4 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python scripts/dream/eval.py \
     --num_fewshot $NUM_FEWSHOT \
     --batch_size $BATCH_SIZE \
     --output_path ${DATA_ROOT}/${MODEL_NAME}/eval/${TASK_NAME}/${EXP_NAME} \
-    --model_args "pretrained_model_path=${MODEL_ROOT}/${MODEL_NAME},log_dir=${DATA_ROOT}/${MODEL_NAME}/${TASK_NAME},exp_name=${EXP_NAME},escape_until=${ESCAPE_UNTIL},steps=${STEPS},gen_length=${GEN_LENGTH},cache=spa,proxy_rank=32,update_ratio_dist=gaussian,max_update_ratio=0.25,refresh_steps=25,refresh_gen_steps=2,log_warmup=${LOG_WARMUP},log_ttft=${LOG_TTFT},log_latency=${LOG_LATENCY}"
+    --model_args "pretrained_model_path=${MODEL_ROOT}/${MODEL_NAME},save_dir=${DATA_ROOT}/${MODEL_NAME}/${TASK_NAME},exp_name=${EXP_NAME},escape_until=${ESCAPE_UNTIL},steps=${STEPS},gen_length=${GEN_LENGTH},cache=spa,proxy_rank=32,update_ratio_dist=gaussian,max_update_ratio=0.25,refresh_steps=25,refresh_gen_steps=2,log_warmup=${LOG_WARMUP},log_ttft=${LOG_TTFT},log_latency=${LOG_LATENCY}"

@@ -14,7 +14,7 @@ python -m pip install -r requirements.txt
 ```
 
 ## 🚀 Quick Start
-You can find the detailed scripts for each benchmark in the `scripts` folder, e.g., for GSM8K benchmark:
+You can find the detailed scripts for benchmark in the `scripts` folder:
 - LLaDA: [scripts/llada/eval_gsm8k.sh](scripts/llada/eval_gsm8k.sh)
 - Dream: [scripts/dream/eval_gsm8k.sh](scripts/dream/eval_gsm8k.sh)
 

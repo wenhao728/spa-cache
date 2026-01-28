@@ -136,7 +136,6 @@ class LLaDA(LM):
             gen_length=gen_length,
             block_length=block_length,
             mask_id=mask_id,
-            return_intermediate=False,
             log_ttft=False,
         )
         self.generate_func = generate
@@ -344,7 +343,7 @@ class LLaDA(LM):
                 with open(self.save_file, "a", encoding="utf-8") as f:
                     for text in output_text:
                         f.write(json.dumps(text, ensure_ascii=False) + "\n")
-            # else: # no save file, for test latency
+            else: # no save file, for test latency
                 if batch_id >= self.log_warmup + self.log_ttft + self.log_latency:
                     break
 

@@ -26,20 +26,31 @@ def save_projection_svd_from_model(
     feature_save_dir: Path,
     device: str,
 ):
+    
+    if model.config.architectures[0] == "LLaDAModelLM":
+        n_layers = model.config.n_layers
+    elif model.config.architectures[0] == "DreamModel":
+        n_layers = model.config.num_hidden_layers
+    else:
+        raise NotImplementedError
+
     feature_save_dir.mkdir(parents=True, exist_ok=True)
-    progress_bar = tqdm(total=model.config.n_layers, desc="Saving SVD features")
+    progress_bar = tqdm(total=n_layers, desc="Saving SVD features")
     for name, module in model.named_modules():
         if name == transformer_blocks_name:
             module: nn.ModuleList
             for block in module:
-                Wt = block.v_proj.weight.data
-                Wt = Wt.to(device, dtype=torch.float32)
+                if model.config.architectures[0] == "LLaDAModelLM":
+                    file_name = feature_save_dir / f"layer_{block.layer_id:02d}.pt"
+                    Wt = block.v_proj.weight.data
+                elif model.config.architectures[0] == "DreamModel":
+                    file_name = feature_save_dir / f"layer_{block.self_attn.layer_idx:02d}.pt"
+                    Wt = block.self_attn.v_proj.weight.data
 
+                Wt = Wt.to(device, dtype=torch.float32)
                 V, S, _ = torch.linalg.svd(Wt.transpose(0, 1), full_matrices=False)
-                torch.save(
-                    {"V": V, "S": S},
-                    feature_save_dir / f"layer_{block.layer_id:02d}.pt",
-                )
+
+                torch.save({"V": V, "S": S}, file_name)
                 progress_bar.update(1)
     progress_bar.close()
 
