@@ -2,12 +2,12 @@ GPU_ID=${1:-0}  # Default to GPU 0 if not provided
 MODEL_ROOT=/dataset/models # Path to store models, "Dream-org" if you want to use the Huggingface models
 DATA_ROOT=./results # Path to datasets
 
-TASK_NAME=gsm8k_cot
+TASK_NAME=minerva_math
 ESCAPE_UNTIL=False
-NUM_FEWSHOT=8
+NUM_FEWSHOT=4
 BATCH_SIZE=4
 
-MODEL_NAME=${2:-Dream-v0-Instruct-7B}
+MODEL_NAME=Dream-v0-Instruct-7B
 STEPS=256
 GEN_LENGTH=256
 
@@ -29,4 +29,4 @@ CUDA_VISIBLE_DEVICES=$GPU_ID python scripts/dream/eval.py \
     --num_fewshot $NUM_FEWSHOT \
     --batch_size $BATCH_SIZE \
     --output_path ${DATA_ROOT}/${MODEL_NAME}/${TASK_NAME}/${EXP_NAME} \
-    --model_args "pretrained_model_path=${MODEL_ROOT}/${MODEL_NAME},save_dir=${DATA_ROOT}/${MODEL_NAME}/${TASK_NAME},exp_name=${EXP_NAME},escape_until=${ESCAPE_UNTIL},steps=${STEPS},gen_length=${GEN_LENGTH},cache=spa,proxy_rank=32,max_update_ratio=0.25,min_update_ratio=0.125,refresh_steps=25,refresh_gen_steps=2"
+    --model_args "pretrained_model_path=${MODEL_ROOT}/${MODEL_NAME},save_dir=${DATA_ROOT}/${MODEL_NAME}/${TASK_NAME},exp_name=${EXP_NAME},escape_until=${ESCAPE_UNTIL},steps=${STEPS},gen_length=${GEN_LENGTH},cache=spa,proxy_rank=32,max_update_ratio=0.25,refresh_steps=50,refresh_gen_steps=1"
