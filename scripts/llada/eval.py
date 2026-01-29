@@ -66,7 +66,7 @@ class LLaDA(LM):
         max_update_ratio: Optional[float] = None,
         avg_update_ratio: Optional[float] = None,
         min_update_ratio: float = 2 ** (-4),
-        update_ratio_dist: Literal['uniform', 'gaussian'] = 'uniform',
+        update_ratio_dist: Literal['uniform', 'gaussian'] = 'gaussian',
         refresh_steps: int = 10_000,
         refresh_gen_steps: int = 10_000,
         early_stop_steps: int = 1,
